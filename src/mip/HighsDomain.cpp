@@ -2042,7 +2042,14 @@ double HighsDomain::doChangeBound(const HighsDomainChange& boundchg) {
   return oldbound;
 }
 
+void HighsDomain::cheBoundCountAdd(){
+  mipsolver->chgBoundNums++;
+}
+
 void HighsDomain::changeBound(HighsDomainChange boundchg, Reason reason) {
+  if(!mipsolver->submip && mipsolver->isPresolved){
+    cheBoundCountAdd();
+  }
   assert(boundchg.column >= 0);
   assert(boundchg.column < (HighsInt)col_upper_.size());
   // assert(infeasible_ == 0);

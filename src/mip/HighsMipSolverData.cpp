@@ -1127,7 +1127,7 @@ void HighsMipSolverData::printDisplayLine(char first) {
         mipsolver.options_mip_->log_options, HighsLogType::kInfo,
         // clang-format off
         "\n        Nodes      |    B&B Tree     |            Objective Bounds              |  Dynamic Constraints |       Work      \n"
-          "     Proc. InQueue |  Leaves   Expl. | BestBound       BestSol              Gap |   Cuts   InLp Confl. | LpIters     Time\n\n"
+          "     Proc. InQueue |  Leaves   Expl. | BestBound       BestSol              Gap |   Cuts   InLp Confl. | LpIters     Time     domchg\n\n"
         // clang-format on
     );
 
@@ -1185,12 +1185,12 @@ void HighsMipSolverData::printDisplayLine(char first) {
     highsLogUser(
         mipsolver.options_mip_->log_options, HighsLogType::kInfo,
         // clang-format off
-                 " %c %7s %7s   %7s %6.2f%%   %-15s %-15s %8s   %6" HIGHSINT_FORMAT " %6" HIGHSINT_FORMAT " %6" HIGHSINT_FORMAT "   %7s %7.1fs\n",
+                 " %c %7s %7s   %7s %6.2f%%   %-15s %-15s %8s   %6" HIGHSINT_FORMAT " %6" HIGHSINT_FORMAT " %6" HIGHSINT_FORMAT "   %7s %7.1fs %7llu\n",
         // clang-format on
-        first, print_nodes.data(), queue_nodes.data(), print_leaves.data(),
+        " ", print_nodes.data(), queue_nodes.data(), print_leaves.data(),
         explored, lb_string.data(), ub_string.data(), gap_string.data(),
         cutpool.getNumCuts(), lp.numRows() - lp.getNumModelRows(),
-        conflictPool.getNumConflicts(), print_lp_iters.data(), time);
+        conflictPool.getNumConflicts(), print_lp_iters.data(), time, mipsolver.chgBoundNums);
   } else {
     std::array<char, 16> ub_string;
     if (mipsolver.options_mip_->objective_bound < ub) {

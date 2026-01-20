@@ -23,6 +23,8 @@ class HighsImplications;
 
 class HighsMipSolver {
  public:
+  unsigned long long chgBoundNums = 0;
+  bool isPresolved = false;
   HighsCallback* callback_;
   const HighsOptions* options_mip_;
   const HighsLp* model_;

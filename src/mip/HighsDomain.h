@@ -28,6 +28,7 @@ class HighsObjectiveFunction;
 
 class HighsDomain {
  public:
+  void cheBoundCountAdd();
   struct Reason {
     HighsInt type;
     HighsInt index;

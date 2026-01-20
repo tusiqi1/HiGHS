@@ -114,6 +114,7 @@ void HighsMipSolver::run() {
   mipdata_ = decltype(mipdata_)(new HighsMipSolverData(*this));
   mipdata_->init();
   mipdata_->runPresolve();
+  isPresolved = true;
   if (modelstatus_ != HighsModelStatus::kNotset) {
     highsLogUser(options_mip_->log_options, HighsLogType::kInfo,
                  "Presolve: %s\n",
@@ -582,9 +583,10 @@ void HighsMipSolver::cleanupSolve() {
                "  Primal bound      %.12g\n"
                "  Dual bound        %.12g\n"
                "  Gap               %s\n"
-               "  Solution status   %s\n",
+               "  Solution status   %s\n"
+               "  chgBoundNums      %llu\n",
                utilModelStatusToString(modelstatus_).c_str(), primal_bound_,
-               dual_bound_, gapString.data(), solutionstatus.c_str());
+               dual_bound_, gapString.data(), solutionstatus.c_str(), chgBoundNums);
   if (solutionstatus != "-")
     highsLogUser(options_mip_->log_options, HighsLogType::kInfo,
                  "                    %.12g (objective)\n"
